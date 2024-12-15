@@ -21,7 +21,7 @@ public class ExcelService {
         List<RowData> data = new ArrayList<>();
         List<String> planArray = new ArrayList<>();
         Set<String> planSet = new HashSet<>();
-        List<String> duplicatePlans = new ArrayList<>();
+        Set<String> duplicatePlans = new HashSet<>();
 
         if (file == null || file.isEmpty()) {
             throw new FileProcessingException("文件為空或未上傳");
@@ -45,7 +45,7 @@ public class ExcelService {
                 if (cell == null || getCellValue(cell, formulaEvaluator).trim().isEmpty())
                     break;
                 String planValue = getCellValue(cell, formulaEvaluator);
-                if (planSet.contains(planValue)) {
+                if (!planSet.add(planValue)) {
                     duplicatePlans.add(planValue);
                 } else {
                     planSet.add(planValue);
